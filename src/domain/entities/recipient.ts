@@ -2,10 +2,12 @@ import { randomUUID } from "node:crypto"
 
 export class Recipient {
   id: string
-  cpf: string
+  public Latitude: number
+  public Longitude: number
 
-  constructor(cpf: string, id?: string) {
+  constructor(cpf: string, latitude: number, longitude: number, id?: string) {
     this.id = id ?? randomUUID()
-    this.cpf = cpf
+    this.Latitude = latitude
+    this.Longitude = longitude
   }
 }
