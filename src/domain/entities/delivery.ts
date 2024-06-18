@@ -1,19 +1,38 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "@/core/entities/entity"
+import { UniqueEntityId } from "@/core/entities/unique-entity-id"
 
-export class Delivery {
-  public id: string
-  public recipientId: string 
-  public deliverymanId: string
-  public status: string
-  public dateOfWithdraw: Date
-  public deliveryDate: Date
+export interface DeliveryProps {
+  recipientId: UniqueEntityId 
+  deliverymanId: UniqueEntityId
+  status: string
+  dateOfWithdraw: Date
+  deliveryDate: Date
+  createdAt: Date
+}
 
-  constructor(recipientId: string, deliverymanId: string ,packageId: string, id?: string) {
-    this.id = id ?? randomUUID()
-    this.deliverymanId = deliverymanId
-    this.recipientId = recipientId
-    this.status = 'awaiting'
-    this.dateOfWithdraw = new Date()
-    this.deliveryDate = new Date()
+export class Delivery extends Entity<DeliveryProps> {
+  get recipientId() {
+    return this.props.recipientId
   }
+
+  get deliverymanId() {
+    return this.props.deliverymanId
+  }
+
+  get status() {
+    return this.props.status
+  }
+
+  get dateOfWithdraw() {
+    return this.props.dateOfWithdraw
+  }
+  
+  get deliveryDate() {
+    return this.props.deliveryDate
+  }
+
+  get createdAt() {
+    return this.props.createdAt
+  }
+
 }

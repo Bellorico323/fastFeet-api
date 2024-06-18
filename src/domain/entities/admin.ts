@@ -1,13 +1,17 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "@/core/entities/entity"
 
-export class Admin {
-  public id: string
-  public name: string
-  public email: string
+export interface AdminProps {
+  name: string
+  email: string
+}
 
-  constructor(name: string, email: string, id?: string) {
-    this.id = id ?? randomUUID()
-    this.name = name
-    this.email = email
+export class Admin extends Entity<AdminProps> {
+  get name() {
+    return this.props.name
   }
+
+  get email() {
+    return this.props.email
+  }
+
 }

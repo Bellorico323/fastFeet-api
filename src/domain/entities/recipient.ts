@@ -1,15 +1,22 @@
-import { randomUUID } from "node:crypto"
+import { Entity } from "@/core/entities/entity"
 
-export class Recipient {
-  public id: string
-  public name: string 
-  public Latitude: number
-  public Longitude: number
+export interface RecipientProps {
+  name: string 
+  latitude: number
+  longitude: number
+}
 
-  constructor(latitude: number, longitude: number, name: string, id?: string) {
-    this.id = id ?? randomUUID()
-    this.name = name
-    this.Latitude = latitude
-    this.Longitude = longitude
+export class Recipient extends Entity<RecipientProps> {
+  get name() {
+    return this.props.name
   }
+
+  get latitude() {
+    return this.props.latitude
+  }
+
+  get longitude() {
+    return this.props.longitude
+  }
+
 }
