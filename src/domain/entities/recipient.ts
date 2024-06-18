@@ -12,15 +12,27 @@ export class Recipient extends Entity<RecipientProps> {
     return this.props.name
   }
 
+  set name(name: string) {
+    this.props.name = name
+  }
+
   get latitude() {
     return this.props.latitude
+  }
+
+  set latitude(latitude: number) {
+    this.props.latitude = latitude
   }
 
   get longitude() {
     return this.props.longitude
   }
 
-  static create(props: Recipient, id?: UniqueEntityID) {
+  set longitude(longitude: number) {
+    this.props.longitude = longitude
+  }
+
+  static create(props: RecipientProps, id?: UniqueEntityID) {
     return new Recipient(props, id)
   }
 }
