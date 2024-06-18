@@ -7,7 +7,7 @@ export class Delivery {
   public deliverymanId: string
   public status: string
 
-  constructor(recipientId: string, deliverymanId: string ,packageId: string, deliveryLatitude: number, deliveryLongitude: number, id?: string) {
+  constructor(recipientId: string, deliverymanId: string ,packageId: string, id?: string) {
     this.id = id ?? randomUUID()
     this.packageId = packageId
     this.deliverymanId = deliverymanId
