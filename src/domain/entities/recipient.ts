@@ -1,4 +1,5 @@
 import { Entity } from "@/core/entities/entity"
+import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 
 export interface RecipientProps {
   name: string 
@@ -19,4 +20,7 @@ export class Recipient extends Entity<RecipientProps> {
     return this.props.longitude
   }
 
+  static create(props: Recipient, id?: UniqueEntityID) {
+    return new Recipient(props, id)
+  }
 }

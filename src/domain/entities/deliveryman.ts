@@ -1,4 +1,5 @@
 import { Entity } from "@/core/entities/entity"
+import { UniqueEntityID } from "@/core/entities/unique-entity-id"
 import { randomUUID } from "node:crypto"
 
 export interface DeliveryManProps {
@@ -25,4 +26,7 @@ export class Deliveryman extends Entity<DeliveryManProps> {
     return this.props.longitude
   }
 
+  static create(props: DeliveryManProps, id?: UniqueEntityID) {
+   return new Deliveryman(props, id)
+  }
 }

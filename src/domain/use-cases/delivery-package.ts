@@ -6,10 +6,4 @@ interface DeliverPackageUseCaseRequest {
   title: string
 }
 
-export class DeliveryPackageUseCase {
-  execute({ deliverymanId, packageId, title }: DeliverPackageUseCaseRequest) {
-    const delivery = new Delivery(title)
-
-    return delivery
-  }
-}
+export class DeliveryPackageUseCase {}
