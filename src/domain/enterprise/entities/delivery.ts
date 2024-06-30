@@ -1,9 +1,9 @@
-import { Entity } from "@/core/entities/entity"
-import { UniqueEntityID } from "@/core/entities/unique-entity-id"
-import { Optional } from "@/core/types/optional"
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Optional } from '@/core/types/optional'
 
 export interface DeliveryProps {
-  recipientId: UniqueEntityID 
+  recipientId: UniqueEntityID
   deliverymanId: UniqueEntityID
   status: string
   dateOfWithdraw: Date
@@ -27,7 +27,7 @@ export class Delivery extends Entity<DeliveryProps> {
   get dateOfWithdraw() {
     return this.props.dateOfWithdraw
   }
-  
+
   get deliveryDate() {
     return this.props.deliveryDate
   }
@@ -36,11 +36,17 @@ export class Delivery extends Entity<DeliveryProps> {
     return this.props.createdAt
   }
 
-  static create(props: Optional<DeliveryProps, 'createdAt'>, id?: UniqueEntityID) {
-    const delivery = new Delivery({
-      ...props,
-      createdAt: new Date()
-    }, id)
+  static create(
+    props: Optional<DeliveryProps, 'createdAt'>,
+    id?: UniqueEntityID,
+  ) {
+    const delivery = new Delivery(
+      {
+        ...props,
+        createdAt: new Date(),
+      },
+      id,
+    )
 
     return delivery
   }

@@ -9,7 +9,7 @@ let fakeHasher: FakeHasher
 let fakeEncrypter: FakeEncrypter
 let sut: AuthenticateAdminUseCase
 
-describe('Authenticate Student', () => {
+describe('Authenticate Admin', () => {
   beforeEach(() => {
     inMemoryAdminRepository = new InMemoryAdminsRepository()
     fakeHasher = new FakeHasher()
@@ -21,7 +21,7 @@ describe('Authenticate Student', () => {
     )
   })
 
-  it('should be able to authenticate a student', async () => {
+  it('should be able to authenticate a admin', async () => {
     const admin = makeAdmin({
       email: 'johndoe@example.com',
       password: await fakeHasher.hash('123456'),

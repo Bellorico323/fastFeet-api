@@ -5,13 +5,13 @@ export class InMemoryAdminsRepository implements AdminRepository {
   public items: Admin[] = []
 
   async findByEmail(email: string): Promise<Admin | null> {
-    const recipient = this.items.find((recipient) => recipient.email === email)
+    const admin = this.items.find((admin) => admin.email === email)
 
-    if (!recipient) {
+    if (!admin) {
       return null
     }
 
-    return recipient
+    return admin
   }
 
   async register(admin: Admin): Promise<void> {
