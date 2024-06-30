@@ -1,17 +1,17 @@
 import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipients-repository'
-import { RegisterRecipientUseCase } from './register-recipient'
+import { CreateRecipientUseCase } from './create-recipient'
 import { makeRecipient } from 'test/factories/make-recipient'
 
 let inMemoryRecipientRepository: InMemoryRecipientRepository
-let sut: RegisterRecipientUseCase
+let sut: CreateRecipientUseCase
 
-describe('Register recipient', () => {
+describe('Create recipient', () => {
   beforeEach(() => {
     inMemoryRecipientRepository = new InMemoryRecipientRepository()
-    sut = new RegisterRecipientUseCase(inMemoryRecipientRepository)
+    sut = new CreateRecipientUseCase(inMemoryRecipientRepository)
   })
 
-  it('should be able to register a new recipient', async () => {
+  it('should be able to create a new recipient', async () => {
     const recipient = makeRecipient({ name: 'John Doe' })
 
     const result = await sut.execute(recipient)

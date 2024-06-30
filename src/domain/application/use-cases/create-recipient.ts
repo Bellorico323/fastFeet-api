@@ -2,22 +2,22 @@ import { Recipient } from '@/domain/enterprise/entities/recipient'
 import { RecipientRepository } from '../repositories/recipient-repository'
 import { Either, right } from '@/core/either'
 
-interface RegisterRecipientUseCaseRequest {
+interface CreateRecipientUseCaseRequest {
   name: string
   latitude: number
   longitude: number
 }
 
-type RegisterRecipientUseCaseResponse = Either<null, { recipient: Recipient }>
+type CreateRecipientUseCaseResponse = Either<null, { recipient: Recipient }>
 
-export class RegisterRecipientUseCase {
+export class CreateRecipientUseCase {
   constructor(private recipientRepository: RecipientRepository) {}
 
   async execute({
     name,
     latitude,
     longitude,
-  }: RegisterRecipientUseCaseRequest): Promise<RegisterRecipientUseCaseResponse> {
+  }: CreateRecipientUseCaseRequest): Promise<CreateRecipientUseCaseResponse> {
     const recipient = Recipient.create({ name, latitude, longitude })
 
     await this.recipientRepository.create(recipient)

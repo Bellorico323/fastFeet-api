@@ -1,9 +1,10 @@
-import { Entity } from "@/core/entities/entity"
-import { UniqueEntityID } from "@/core/entities/unique-entity-id"
+import { Entity } from '@/core/entities/entity'
+import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 
 export interface AdminProps {
   name: string
   email: string
+  password: string
 }
 
 export class Admin extends Entity<AdminProps> {
@@ -21,6 +22,10 @@ export class Admin extends Entity<AdminProps> {
 
   set email(email: string) {
     this.props.email = email
+  }
+
+  get password() {
+    return this.props.password
   }
 
   static create(props: AdminProps, id?: UniqueEntityID) {
