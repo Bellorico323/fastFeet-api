@@ -6,7 +6,7 @@ import { DeleteRecipientUseCase } from './delete-recipient'
 let inMemoryRecipientRepository: InMemoryRecipientRepository
 let sut: DeleteRecipientUseCase
 
-describe('Edit Recipient', () => {
+describe('Delete a Recipient', () => {
   beforeEach(() => {
     inMemoryRecipientRepository = new InMemoryRecipientRepository()
     sut = new DeleteRecipientUseCase(inMemoryRecipientRepository)
