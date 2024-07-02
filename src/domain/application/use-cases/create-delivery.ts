@@ -20,8 +20,6 @@ export class CreateDeliveryUseCase {
     const delivery = Delivery.create({
       recipientId: new UniqueEntityID(recipientId),
       deliverymanId: new UniqueEntityID(deliverymanId),
-      dateOfWithdraw: null,
-      deliveryDate: null,
     })
 
     await this.deliveryRepository.create(delivery)

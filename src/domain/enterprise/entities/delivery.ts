@@ -7,8 +7,8 @@ export interface DeliveryProps {
   recipientId: UniqueEntityID
   deliverymanId: UniqueEntityID
   status: DeliveryStatus
-  dateOfWithdraw: Date | null
-  deliveryDate: Date | null
+  dateOfWithdraw?: Date | null
+  deliveryDate?: Date | null
   createdAt: Date
 }
 
@@ -27,6 +27,10 @@ export class Delivery extends Entity<DeliveryProps> {
 
   get dateOfWithdraw() {
     return this.props.dateOfWithdraw
+  }
+
+  set dateOfWithdraw(date: Date | null | undefined) {
+    this.props.dateOfWithdraw = date
   }
 
   get deliveryDate() {
