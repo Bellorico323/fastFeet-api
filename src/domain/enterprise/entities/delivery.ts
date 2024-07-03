@@ -1,7 +1,7 @@
-import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { Optional } from '@/core/types/optional'
 import { DeliveryStatus } from './value-objects/delivery-status'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
 
 export interface DeliveryProps {
   recipientId: UniqueEntityID
@@ -12,7 +12,7 @@ export interface DeliveryProps {
   createdAt: Date
 }
 
-export class Delivery extends Entity<DeliveryProps> {
+export class Delivery extends AggregateRoot<DeliveryProps> {
   get recipientId() {
     return this.props.recipientId
   }
