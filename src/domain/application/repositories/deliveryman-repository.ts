@@ -4,4 +4,5 @@ export interface DeliverymanRepository {
   findByCpf(cpf: string): Promise<Deliveryman | null>
   register(Deliveryman: Deliveryman): Promise<void>
   save(Deliveryman: Deliveryman): Promise<void>
+  delete(Deliveryman: Deliveryman): Promise<void>
 }
