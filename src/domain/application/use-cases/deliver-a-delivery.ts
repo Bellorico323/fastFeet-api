@@ -46,6 +46,7 @@ export class DelivererADeliveryUseCase {
     }
 
     delivery.status.toDelivered()
+    delivery.deliveryDate = new Date()
 
     this.deliveryRepository.save(delivery)
 

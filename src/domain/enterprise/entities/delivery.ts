@@ -39,6 +39,10 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
     return this.props.deliveryDate
   }
 
+  set deliveryDate(date: Date | null | undefined) {
+    this.props.deliveryDate = date
+  }
+
   get createdAt() {
     return this.props.createdAt
   }

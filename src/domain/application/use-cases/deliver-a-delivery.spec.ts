@@ -87,4 +87,35 @@ describe('Deliver a delivery', () => {
     expect(result.value).toBeInstanceOf(DeliveryWithoutAttachmentError)
     expect(deliveryInRepository.status.toString()).toEqual('Awaiting')
   })
+
+  it(`should be able to update deliveryDate when deliver a delivery`, async () => {
+    const deliveryman = makeDeliveryman()
+    await inMemoryDeliverymanRepository.register(deliveryman)
+
+    const recipient = makeRecipient()
+    await inMemoryRecipientRepository.create(recipient)
+
+    const delivery = makeDelivery({
+      recipientId: recipient.id,
+      deliverymanId: deliveryman.id,
+    })
+    await inMemoryDeliveryRepository.create(delivery)
+
+    expect(inMemoryDeliveryRepository.items[0].status.toString()).toEqual(
+      'Awaiting',
+    )
+
+    const deliveryId = delivery.id.toString()
+
+    const result = await sut.execute({
+      deliveryId,
+      attachmentsId: ['1'],
+    })
+
+    const deliveryInRepository = inMemoryDeliveryRepository.items[0]
+
+    expect(result.isRight()).toBe(true)
+    expect(deliveryInRepository.status.toString()).toEqual('Delivered')
+    expect(deliveryInRepository.deliveryDate).toEqual(expect.any(Date))
+  })
 })
