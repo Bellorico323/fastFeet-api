@@ -1,8 +1,13 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
+import { DeliveryAttachmentRepository } from '@/domain/application/repositories/delivery-attachment-repository'
 import { DeliveryRepository } from '@/domain/application/repositories/delivery-repository'
 import { Delivery } from '@/domain/enterprise/entities/delivery'
 
 export class InMemoryDeliveryRepository implements DeliveryRepository {
+  constructor(
+    private deliveryAttachmentsRepository: DeliveryAttachmentRepository,
+  ) {}
+
   public items: Delivery[] = []
 
   async findById(id: string): Promise<Delivery | null> {
@@ -34,6 +39,14 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
 
   async save(delivery: Delivery): Promise<void> {
     const itemIndex = this.items.findIndex((item) => item.id === delivery.id)
+
+    await this.deliveryAttachmentsRepository.createMany(
+      delivery.attachment.getNewItems(),
+    )
+
+    await this.deliveryAttachmentsRepository.deleteMany(
+      delivery.attachment.getRemovedItems(),
+    )
 
     this.items[itemIndex] = delivery
   }

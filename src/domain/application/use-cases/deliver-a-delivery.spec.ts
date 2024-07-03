@@ -7,15 +7,21 @@ import { makeDelivery } from 'test/factories/make-delivery'
 import { DelivererADeliveryUseCase } from './deliver-a-delivery'
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { DeliveryWithoutAttachmentError } from './errors/delivery-without-attachment-error'
+import { InMemoryDeliveryAttachmentsRepository } from 'test/repositories/in-memory-delivery-attachments-repository'
 
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryDeliverymanRepository: InMemoryDeliverymansRepository
 let inMemoryRecipientRepository: InMemoryRecipientRepository
+let inMemoryDeliveryAttachmentsRepository: InMemoryDeliveryAttachmentsRepository
 let sut: DelivererADeliveryUseCase
 
 describe('Deliver a delivery', () => {
   beforeEach(() => {
-    inMemoryDeliveryRepository = new InMemoryDeliveryRepository()
+    inMemoryDeliveryAttachmentsRepository =
+      new InMemoryDeliveryAttachmentsRepository()
+    inMemoryDeliveryRepository = new InMemoryDeliveryRepository(
+      inMemoryDeliveryAttachmentsRepository,
+    )
     inMemoryDeliverymanRepository = new InMemoryDeliverymansRepository()
     inMemoryRecipientRepository = new InMemoryRecipientRepository()
     sut = new DelivererADeliveryUseCase(inMemoryDeliveryRepository)
@@ -88,7 +94,7 @@ describe('Deliver a delivery', () => {
     expect(deliveryInRepository.status.toString()).toEqual('Awaiting')
   })
 
-  it(`should be able to update deliveryDate when deliver a delivery`, async () => {
+  it(`should be able to update delivery date when deliver a delivery`, async () => {
     const deliveryman = makeDeliveryman()
     await inMemoryDeliverymanRepository.register(deliveryman)
 

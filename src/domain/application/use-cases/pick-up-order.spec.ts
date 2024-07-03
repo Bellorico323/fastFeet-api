@@ -5,7 +5,9 @@ import { InMemoryDeliverymansRepository } from 'test/repositories/in-memory-deli
 import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipients-repository'
 import { makeRecipient } from 'test/factories/make-recipient'
 import { makeDelivery } from 'test/factories/make-delivery'
+import { InMemoryDeliveryAttachmentsRepository } from 'test/repositories/in-memory-delivery-attachments-repository'
 
+let inMemoryDeliveryAttachmentsRepository: InMemoryDeliveryAttachmentsRepository
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryDeliverymanRepository: InMemoryDeliverymansRepository
 let inMemoryRecipientRepository: InMemoryRecipientRepository
@@ -13,7 +15,11 @@ let sut: PickUpOrderUseCase
 
 describe('Pick up order', () => {
   beforeEach(() => {
-    inMemoryDeliveryRepository = new InMemoryDeliveryRepository()
+    inMemoryDeliveryAttachmentsRepository =
+      new InMemoryDeliveryAttachmentsRepository()
+    inMemoryDeliveryRepository = new InMemoryDeliveryRepository(
+      inMemoryDeliveryAttachmentsRepository,
+    )
     inMemoryDeliverymanRepository = new InMemoryDeliverymansRepository()
     inMemoryRecipientRepository = new InMemoryRecipientRepository()
     sut = new PickUpOrderUseCase(inMemoryDeliveryRepository)

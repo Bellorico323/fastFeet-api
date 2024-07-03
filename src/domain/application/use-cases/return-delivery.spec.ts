@@ -5,7 +5,9 @@ import { InMemoryRecipientRepository } from 'test/repositories/in-memory-recipie
 import { makeRecipient } from 'test/factories/make-recipient'
 import { makeDelivery } from 'test/factories/make-delivery'
 import { ReturnDeliveryUseCase } from './return-delivery'
+import { InMemoryDeliveryAttachmentsRepository } from 'test/repositories/in-memory-delivery-attachments-repository'
 
+let inMemoryDeliveryAttachmentsRepository: InMemoryDeliveryAttachmentsRepository
 let inMemoryDeliveryRepository: InMemoryDeliveryRepository
 let inMemoryDeliverymanRepository: InMemoryDeliverymansRepository
 let inMemoryRecipientRepository: InMemoryRecipientRepository
@@ -13,7 +15,11 @@ let sut: ReturnDeliveryUseCase
 
 describe('Return a Delivery', () => {
   beforeEach(() => {
-    inMemoryDeliveryRepository = new InMemoryDeliveryRepository()
+    inMemoryDeliveryAttachmentsRepository =
+      new InMemoryDeliveryAttachmentsRepository()
+    inMemoryDeliveryRepository = new InMemoryDeliveryRepository(
+      inMemoryDeliveryAttachmentsRepository,
+    )
     inMemoryDeliverymanRepository = new InMemoryDeliverymansRepository()
     inMemoryRecipientRepository = new InMemoryRecipientRepository()
     sut = new ReturnDeliveryUseCase(inMemoryDeliveryRepository)
