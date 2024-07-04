@@ -45,7 +45,42 @@ describe('Fetch Deliveryman Deliveries', () => {
       page: 1,
     })
 
-    console.log(result.value)
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.deliveries).toHaveLength(2)
+    expect(result.value?.deliveries).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          props: expect.objectContaining({
+            deliverymanId: expect.objectContaining({
+              value: deliveryman1.id.toString(),
+            }),
+          }),
+        }),
+        expect.objectContaining({
+          props: expect.objectContaining({
+            deliverymanId: expect.objectContaining({
+              value: deliveryman1.id.toString(),
+            }),
+          }),
+        }),
+      ]),
+    )
+  })
+
+  it('should be able to paginate recipients', async () => {
+    const deliveryman = makeDeliveryman()
+    await inMemoryDeliverymanRepository.register(deliveryman)
+
+    for (let i = 1; i <= 22; i++) {
+      await inMemoryDeliveryRepository.create(
+        makeDelivery({ deliverymanId: deliveryman.id }),
+      )
+    }
+
+    const result = await sut.execute({
+      deliverymanId: deliveryman.id.toString(),
+      page: 2,
+    })
 
     expect(result.isRight()).toBe(true)
     expect(result.value?.deliveries).toHaveLength(2)
