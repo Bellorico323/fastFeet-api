@@ -6,14 +6,16 @@ import { DeliveryAttachment } from '@/domain/enterprise/entities/delivery-attach
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import { DeliveryAttachmentList } from '@/domain/enterprise/entities/delivery-attachment-list'
 import { DeliveryWithoutAttachmentError } from './errors/delivery-without-attachment-error'
+import { UnauthorizedError } from './errors/unauthorized-error'
 
 interface DelivererADeliveryUseCaseRequest {
   deliveryId: string
+  deliverymanId: string
   attachmentsId: string[]
 }
 
 type DelivererADeliveryUseCaseResponse = Either<
-  ResourceNotFoundError | DeliveryWithoutAttachmentError,
+  ResourceNotFoundError | DeliveryWithoutAttachmentError | UnauthorizedError,
   {
     delivery: Delivery
   }
@@ -24,12 +26,17 @@ export class DelivererADeliveryUseCase {
 
   async execute({
     deliveryId,
+    deliverymanId,
     attachmentsId,
   }: DelivererADeliveryUseCaseRequest): Promise<DelivererADeliveryUseCaseResponse> {
     const delivery = await this.deliveryRepository.findById(deliveryId)
 
     if (!delivery) {
       return left(new ResourceNotFoundError())
+    }
+
+    if (delivery.deliverymanId.toString() !== deliverymanId) {
+      return left(new UnauthorizedError())
     }
 
     const deliveryAttachment = attachmentsId.map((attachmentId) => {
