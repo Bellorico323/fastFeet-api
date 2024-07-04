@@ -1,11 +1,17 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { DeliveryAttachmentRepository } from '@/domain/application/repositories/delivery-attachment-repository'
-import { DeliveryRepository } from '@/domain/application/repositories/delivery-repository'
+import {
+  DeliveryRepository,
+  FindManyNearByParams,
+} from '@/domain/application/repositories/delivery-repository'
 import { Delivery } from '@/domain/enterprise/entities/delivery'
+import { InMemoryRecipientRepository } from './in-memory-recipients-repository'
+import { CoordinatesComparer } from '@/core/entities/coordinates-comparer'
 
 export class InMemoryDeliveryRepository implements DeliveryRepository {
   constructor(
     private deliveryAttachmentsRepository: DeliveryAttachmentRepository,
+    private recipientRepository: InMemoryRecipientRepository,
   ) {}
 
   public items: Delivery[] = []
@@ -31,6 +37,33 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
       .slice((page - 1) * 20, page * 20)
 
     return deliveries
+  }
+
+  async findManyNearByDeliveryman(
+    params: FindManyNearByParams,
+  ): Promise<Delivery[]> {
+    return this.items.filter((item) => {
+      const recipient = this.recipientRepository.items.find(
+        (recipient) => recipient.id === item.recipientId,
+      )
+
+      if (!recipient) {
+        return null
+      }
+
+      const distance = CoordinatesComparer.getDistanceBetweenTwoCoordinates(
+        {
+          latitude: params.latitude,
+          longitude: params.longitude,
+        },
+        {
+          latitude: recipient.latitude,
+          longitude: recipient.longitude,
+        },
+      )
+
+      return distance < 10
+    })
   }
 
   async create(delivery: Delivery): Promise<void> {
