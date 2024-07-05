@@ -7,6 +7,7 @@ import { UnauthorizedError } from './errors/unauthorized-error'
 import { DeliveryAttachmentList } from '../../enterprise/entities/delivery-attachment-list'
 import { DeliveryAttachment } from '../../enterprise/entities/delivery-attachment'
 import { Delivery } from '../../enterprise/entities/delivery'
+import { DeliveryStatus } from '../../enterprise/entities/value-objects/delivery-status'
 
 interface DelivererADeliveryUseCaseRequest {
   deliveryId: string
@@ -52,7 +53,7 @@ export class DelivererADeliveryUseCase {
       return left(new DeliveryWithoutAttachmentError(delivery.id.toString()))
     }
 
-    delivery.status.toDelivered()
+    delivery.status = DeliveryStatus.toDelivered()
     delivery.deliveryDate = new Date()
 
     this.deliveryRepository.save(delivery)

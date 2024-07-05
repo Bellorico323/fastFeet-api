@@ -41,7 +41,7 @@ describe('Pick up order', () => {
     await inMemoryDeliveryRepository.create(delivery)
 
     expect(inMemoryDeliveryRepository.items[0].status.toString()).toEqual(
-      'Awaiting',
+      'awaiting',
     )
 
     const deliveryId = delivery.id.toString()
@@ -59,7 +59,7 @@ describe('Pick up order', () => {
         dateOfWithdraw: expect.any(Date),
       }),
     })
-    expect(deliveryInRepository.status.toString()).toEqual('Withdrawn')
+    expect(deliveryInRepository.status.toString()).toEqual('withdrawn')
   })
 
   it(`should not be able to pick up a delivery from anotherDeliveryman`, async () => {
@@ -76,7 +76,7 @@ describe('Pick up order', () => {
     await inMemoryDeliveryRepository.create(delivery)
 
     expect(inMemoryDeliveryRepository.items[0].status.toString()).toEqual(
-      'Awaiting',
+      'awaiting',
     )
 
     const deliveryId = delivery.id.toString()

@@ -3,6 +3,7 @@ import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-e
 import { DeliveryRepository } from '../repositories/delivery-repository'
 import { UnauthorizedError } from './errors/unauthorized-error'
 import { Delivery } from '../../enterprise/entities/delivery'
+import { DeliveryStatus } from '../../enterprise/entities/value-objects/delivery-status'
 
 interface PickUpOrderUseCaseRequest {
   deliveryId: string
@@ -33,7 +34,7 @@ export class PickUpOrderUseCase {
       return left(new UnauthorizedError())
     }
 
-    delivery.status.toWithdrawn()
+    delivery.status = DeliveryStatus.toWithdrawn()
     delivery.dateOfWithdraw = new Date()
 
     this.deliveryRepository.save(delivery)

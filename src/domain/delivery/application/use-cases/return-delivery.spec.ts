@@ -40,7 +40,7 @@ describe('Return a Delivery', () => {
     await inMemoryDeliveryRepository.create(delivery)
 
     expect(inMemoryDeliveryRepository.items[0].status.toString()).toEqual(
-      'Awaiting',
+      'awaiting',
     )
 
     const deliveryId = delivery.id.toString()
@@ -52,6 +52,6 @@ describe('Return a Delivery', () => {
     const deliveryInRepository = inMemoryDeliveryRepository.items[0]
 
     expect(result.isRight()).toBe(true)
-    expect(deliveryInRepository.status.toString()).toEqual('Returned')
+    expect(deliveryInRepository.status.toString()).toEqual('returned')
   })
 })

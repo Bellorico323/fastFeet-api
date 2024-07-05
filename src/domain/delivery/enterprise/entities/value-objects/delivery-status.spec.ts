@@ -3,13 +3,13 @@ import { DeliveryStatus } from './delivery-status'
 test('it should create a new status with value equal to awaiting', () => {
   const status = DeliveryStatus.create()
 
-  expect(status.toString()).toEqual('Awaiting')
+  expect(status.toString()).toEqual('awaiting')
 })
 
 test('it should be able to change status to withdrawn', () => {
-  const status = DeliveryStatus.create()
+  let status = DeliveryStatus.create()
 
-  status.toWithdrawn()
+  status = DeliveryStatus.toWithdrawn()
 
-  expect(status.toString()).toEqual('Withdrawn')
+  expect(status.toString()).toEqual('withdrawn')
 })

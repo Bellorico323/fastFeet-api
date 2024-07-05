@@ -59,6 +59,6 @@ describe('Create delivery', () => {
       inMemoryDeliveryRepository.items[0].status
 
     expect(result.isRight()).toBe(true)
-    expect(deliveryInRepositoryStatus.toString()).toEqual('Awaiting')
+    expect(deliveryInRepositoryStatus.toString()).toEqual('awaiting')
   })
 })

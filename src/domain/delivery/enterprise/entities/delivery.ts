@@ -3,6 +3,8 @@ import { Optional } from '@/core/types/optional'
 import { DeliveryStatus } from './value-objects/delivery-status'
 import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { DeliveryAttachmentList } from './delivery-attachment-list'
+import { DeliveryCreatedEvent } from '../events/delivery-created-event'
+import { DeliveryStatusChangeEvent } from '../events/delivery-status-change'
 
 export interface DeliveryProps {
   recipientId: UniqueEntityID
@@ -25,6 +27,12 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
 
   get status() {
     return this.props.status
+  }
+
+  set status(status: DeliveryStatus) {
+    this.addDomainEvent(new DeliveryStatusChangeEvent(this, status))
+
+    this.props.status = status
   }
 
   get dateOfWithdraw() {
@@ -68,6 +76,12 @@ export class Delivery extends AggregateRoot<DeliveryProps> {
       },
       id,
     )
+
+    const isNewDelivery = !id
+
+    if (isNewDelivery) {
+      delivery.addDomainEvent(new DeliveryCreatedEvent(delivery))
+    }
 
     return delivery
   }

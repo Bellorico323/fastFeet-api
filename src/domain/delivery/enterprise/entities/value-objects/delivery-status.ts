@@ -1,29 +1,29 @@
-type DeliveryStatusTypes = 'Awaiting' | 'Withdrawn' | 'Delivered' | 'Returned'
+type DeliveryStatusTypes = 'awaiting' | 'withdrawn' | 'delivered' | 'returned'
 
 export class DeliveryStatus {
   private status: DeliveryStatusTypes
 
-  private constructor() {
-    this.status = 'Awaiting'
+  private constructor(status: DeliveryStatusTypes) {
+    this.status = status
   }
 
   toString() {
     return this.status.toString()
   }
 
-  toWithdrawn() {
-    return (this.status = 'Withdrawn')
+  static toWithdrawn() {
+    return new DeliveryStatus('withdrawn')
   }
 
-  toDelivered() {
-    return (this.status = 'Delivered')
+  static toDelivered() {
+    return new DeliveryStatus('delivered')
   }
 
-  toReturned() {
-    return (this.status = 'Returned')
+  static toReturned() {
+    return new DeliveryStatus('returned')
   }
 
   static create() {
-    return new DeliveryStatus()
+    return new DeliveryStatus('awaiting')
   }
 }

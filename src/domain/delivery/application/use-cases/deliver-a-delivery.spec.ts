@@ -43,7 +43,7 @@ describe('Deliver a delivery', () => {
     await inMemoryDeliveryRepository.create(delivery)
 
     expect(inMemoryDeliveryRepository.items[0].status.toString()).toEqual(
-      'Awaiting',
+      'awaiting',
     )
 
     const deliveryId = delivery.id.toString()
@@ -57,7 +57,7 @@ describe('Deliver a delivery', () => {
     const deliveryInRepository = inMemoryDeliveryRepository.items[0]
 
     expect(result.isRight()).toBe(true)
-    expect(deliveryInRepository.status.toString()).toEqual('Delivered')
+    expect(deliveryInRepository.status.toString()).toEqual('delivered')
     expect(
       inMemoryDeliveryRepository.items[0].attachment.currentItems,
     ).toHaveLength(1)
@@ -80,7 +80,7 @@ describe('Deliver a delivery', () => {
     await inMemoryDeliveryRepository.create(delivery)
 
     expect(inMemoryDeliveryRepository.items[0].status.toString()).toEqual(
-      'Awaiting',
+      'awaiting',
     )
 
     const deliveryId = delivery.id.toString()
@@ -95,7 +95,7 @@ describe('Deliver a delivery', () => {
 
     expect(result.isLeft()).toBe(true)
     expect(result.value).toBeInstanceOf(DeliveryWithoutAttachmentError)
-    expect(deliveryInRepository.status.toString()).toEqual('Awaiting')
+    expect(deliveryInRepository.status.toString()).toEqual('awaiting')
   })
 
   it(`should be able to update delivery date when deliver a delivery`, async () => {
@@ -112,7 +112,7 @@ describe('Deliver a delivery', () => {
     await inMemoryDeliveryRepository.create(delivery)
 
     expect(inMemoryDeliveryRepository.items[0].status.toString()).toEqual(
-      'Awaiting',
+      'awaiting',
     )
 
     const deliveryId = delivery.id.toString()
@@ -126,7 +126,7 @@ describe('Deliver a delivery', () => {
     const deliveryInRepository = inMemoryDeliveryRepository.items[0]
 
     expect(result.isRight()).toBe(true)
-    expect(deliveryInRepository.status.toString()).toEqual('Delivered')
+    expect(deliveryInRepository.status.toString()).toEqual('delivered')
     expect(deliveryInRepository.deliveryDate).toEqual(expect.any(Date))
   })
 
@@ -144,7 +144,7 @@ describe('Deliver a delivery', () => {
     await inMemoryDeliveryRepository.create(delivery)
 
     expect(inMemoryDeliveryRepository.items[0].status.toString()).toEqual(
-      'Awaiting',
+      'awaiting',
     )
 
     const deliveryId = delivery.id.toString()

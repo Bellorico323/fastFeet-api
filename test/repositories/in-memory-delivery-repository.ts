@@ -8,6 +8,7 @@ import {
 } from '@/domain/delivery/application/repositories/delivery-repository'
 import { DeliveryAttachmentRepository } from '@/domain/delivery/application/repositories/delivery-attachment-repository'
 import { Delivery } from '@/domain/delivery/enterprise/entities/delivery'
+import { DomainEvents } from '@/core/events/domain-events'
 
 export class InMemoryDeliveryRepository implements DeliveryRepository {
   constructor(
@@ -69,6 +70,8 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
 
   async create(delivery: Delivery): Promise<void> {
     this.items.push(delivery)
+
+    DomainEvents.dispatchEventsForAggregate(delivery.id)
   }
 
   async save(delivery: Delivery): Promise<void> {
@@ -83,6 +86,8 @@ export class InMemoryDeliveryRepository implements DeliveryRepository {
     )
 
     this.items[itemIndex] = delivery
+
+    DomainEvents.dispatchEventsForAggregate(delivery.id)
   }
 
   async delete(delivery: Delivery): Promise<void> {

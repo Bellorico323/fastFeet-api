@@ -2,6 +2,7 @@ import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { DeliveryRepository } from '../repositories/delivery-repository'
 import { Delivery } from '../../enterprise/entities/delivery'
+import { DeliveryStatus } from '../../enterprise/entities/value-objects/delivery-status'
 
 interface ReturnDeliveryUseCaseRequest {
   deliveryId: string
@@ -26,7 +27,7 @@ export class ReturnDeliveryUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    delivery.status.toReturned()
+    delivery.status = DeliveryStatus.toReturned()
 
     this.deliveryRepository.save(delivery)
 
