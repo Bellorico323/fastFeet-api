@@ -1,9 +1,9 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
-import { faker } from '@faker-js/faker'
 import {
   Deliveryman,
   DeliverymanProps,
-} from '@/domain/enterprise/entities/deliveryman'
+} from '@/domain/delivery/enterprise/entities/deliveryman'
+import { faker } from '@faker-js/faker'
 
 export function makeDeliveryman(
   override: Partial<DeliverymanProps> = {},

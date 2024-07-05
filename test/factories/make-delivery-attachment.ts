@@ -2,7 +2,7 @@ import { UniqueEntityID } from '@/core/entities/unique-entity-id'
 import {
   DeliveryAttachment,
   DeliveryAttachmentProps,
-} from '@/domain/enterprise/entities/delivery-attachment'
+} from '@/domain/delivery/enterprise/entities/delivery-attachment'
 
 export function makeDeliveryAttachment(
   override: Partial<DeliveryAttachmentProps> = {},

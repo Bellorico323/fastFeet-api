@@ -1,5 +1,5 @@
-import { DeliveryAttachmentRepository } from '@/domain/application/repositories/delivery-attachment-repository'
-import { DeliveryAttachment } from '@/domain/enterprise/entities/delivery-attachment'
+import { DeliveryAttachmentRepository } from '@/domain/delivery/application/repositories/delivery-attachment-repository'
+import { DeliveryAttachment } from '@/domain/delivery/enterprise/entities/delivery-attachment'
 
 export class InMemoryDeliveryAttachmentsRepository
   implements DeliveryAttachmentRepository

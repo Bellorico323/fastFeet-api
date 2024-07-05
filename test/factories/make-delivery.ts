@@ -1,7 +1,10 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import {
+  Delivery,
+  DeliveryProps,
+} from '@/domain/delivery/enterprise/entities/delivery'
+import { DeliveryStatus } from '@/domain/delivery/enterprise/entities/value-objects/delivery-status'
 import { faker } from '@faker-js/faker'
-import { Delivery, DeliveryProps } from '@/domain/enterprise/entities/delivery'
-import { DeliveryStatus } from '@/domain/enterprise/entities/value-objects/delivery-status'
 
 export function makeDelivery(
   override: Partial<DeliveryProps> = {},

@@ -1,12 +1,13 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
-import { DeliveryAttachmentRepository } from '@/domain/application/repositories/delivery-attachment-repository'
+
+import { InMemoryRecipientRepository } from './in-memory-recipients-repository'
+import { CoordinatesComparer } from '@/core/entities/coordinates-comparer'
 import {
   DeliveryRepository,
   FindManyNearByParams,
-} from '@/domain/application/repositories/delivery-repository'
-import { Delivery } from '@/domain/enterprise/entities/delivery'
-import { InMemoryRecipientRepository } from './in-memory-recipients-repository'
-import { CoordinatesComparer } from '@/core/entities/coordinates-comparer'
+} from '@/domain/delivery/application/repositories/delivery-repository'
+import { DeliveryAttachmentRepository } from '@/domain/delivery/application/repositories/delivery-attachment-repository'
+import { Delivery } from '@/domain/delivery/enterprise/entities/delivery'
 
 export class InMemoryDeliveryRepository implements DeliveryRepository {
   constructor(

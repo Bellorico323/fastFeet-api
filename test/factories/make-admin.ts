@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/entities/unique-entity-id'
+import { Admin, AdminProps } from '@/domain/delivery/enterprise/entities/admin'
 import { faker } from '@faker-js/faker'
-import { Admin, AdminProps } from '@/domain/enterprise/entities/admin'
 
 export function makeAdmin(
   override: Partial<AdminProps> = {},
