@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm'
-import { join } from 'path'
+import { User } from './entity/user'
 
 export const databaseProviders = [
   {
@@ -12,7 +12,7 @@ export const databaseProviders = [
         username: 'postgres',
         password: 'docker',
         database: 'fastfeet',
-        entities: [join(__dirname, '/../**/**.entity{.ts,.js}')],
+        entities: [User],
         migrations: ['src/infra/typeorm/migration/**/*.ts'],
         synchronize: true,
       })
