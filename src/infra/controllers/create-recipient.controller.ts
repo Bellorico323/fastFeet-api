@@ -1,4 +1,4 @@
-import { Body, Controller, Post, UseGuards, UsePipes } from '@nestjs/common'
+import { Body, Controller, Post, UseGuards } from '@nestjs/common'
 import { PrismaService } from '../database/prisma/prisma.service'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { z } from 'zod'
@@ -12,14 +12,23 @@ const createRecipientBodySchema = z.object({
 
 type CreateRecipientBodySchema = z.infer<typeof createRecipientBodySchema>
 
+const bodyValidationPipe = new ZodValidationPipe(createRecipientBodySchema)
+
 @Controller('/recipient')
 @UseGuards(JwtAuthGuard)
 export class CreateRecipientController {
   constructor(private prisma: PrismaService) {}
 
   @Post()
-  @UsePipes(new ZodValidationPipe(createRecipientBodySchema))
-  async handle(@Body() body: CreateRecipientBodySchema) {
-    console.log(body)
+  async handle(@Body(bodyValidationPipe) body: CreateRecipientBodySchema) {
+    const { name, latitude, longitude } = body
+
+    await this.prisma.recipient.create({
+      data: {
+        name,
+        latitude,
+        longitude,
+      },
+    })
   }
 }
