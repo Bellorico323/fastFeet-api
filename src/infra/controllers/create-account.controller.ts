@@ -6,10 +6,10 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common'
-import { UserService } from '../database/typeorm/repositories/user-repository'
 import { hash } from 'bcryptjs'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
+import { PrismaService } from '../database/prisma/prisma.service'
 
 const createAccountBodySchema = z.object({
   name: z.string(),
@@ -21,7 +21,7 @@ type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
 
 @Controller('/accounts')
 export class CreateAccountController {
-  constructor(private userService: UserService) {}
+  constructor(private prisma: PrismaService) {}
 
   @Post()
   @HttpCode(201)
@@ -29,7 +29,11 @@ export class CreateAccountController {
   async handle(@Body() body: CreateAccountBodySchema) {
     const { name, email, password } = body
 
-    const userWithSameEmail = await this.userService.findByEmail(email)
+    const userWithSameEmail = await this.prisma.admin.findUnique({
+      where: {
+        email,
+      },
+    })
 
     if (userWithSameEmail) {
       throw new ConflictException(
@@ -39,6 +43,8 @@ export class CreateAccountController {
 
     const hashedPassword = await hash(password, 8)
 
-    await this.userService.create({ name, email, password: hashedPassword })
+    await this.prisma.admin.create({
+      data: { name, email, password: hashedPassword },
+    })
   }
 }

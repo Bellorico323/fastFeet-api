@@ -8,8 +8,8 @@ import {
 import { JwtService } from '@nestjs/jwt'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
-import { UserService } from '../database/typeorm/repositories/user-repository'
 import { compare } from 'bcryptjs'
+import { PrismaService } from '../database/prisma/prisma.service'
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -22,7 +22,7 @@ type AuthenticateBodySchema = z.infer<typeof authenticateBodySchema>
 export class AuthenticateController {
   constructor(
     private jwt: JwtService,
-    private users: UserService,
+    private prisma: PrismaService,
   ) {}
 
   @Post()
@@ -30,7 +30,11 @@ export class AuthenticateController {
   async handle(@Body() body: AuthenticateBodySchema) {
     const { email, password } = body
 
-    const user = await this.users.findByEmail(email)
+    const user = await this.prisma.admin.findUnique({
+      where: {
+        email,
+      },
+    })
 
     if (!user) {
       throw new UnauthorizedException('User credentials do not match.')

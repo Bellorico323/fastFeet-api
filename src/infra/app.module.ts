@@ -1,20 +1,26 @@
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
-import { UserModule } from './database/typeorm/repositories/user-repository/user.module'
-import { envSchema } from './env'
 import { AuthModule } from './auth/auth.module'
+import { PrismaService } from './database/prisma/prisma.service'
+import { envSchema } from './env/env'
+import { CreateAccountController } from './controllers/create-account.controller'
+import { AuthenticateController } from './controllers/authenticate.controller'
+import { CreateRecipientController } from './controllers/create-recipient.controller'
 
 @Module({
   imports: [
-    UserModule,
     ConfigModule.forRoot({
       validate: (env) => envSchema.parse(env),
       isGlobal: true,
     }),
     AuthModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [
+    CreateAccountController,
+    AuthenticateController,
+    CreateRecipientController,
+  ],
+  providers: [PrismaService],
 })
 export class AppModule {
   constructor() {}
