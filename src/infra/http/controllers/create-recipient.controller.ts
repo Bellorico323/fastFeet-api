@@ -1,8 +1,8 @@
 import { Body, Controller, Post, UseGuards } from '@nestjs/common'
-import { PrismaService } from '../database/prisma/prisma.service'
+import { PrismaService } from '../../database/prisma/prisma.service'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { z } from 'zod'
-import { JwtAuthGuard } from '../auth/jwt-auth.guard'
+import { JwtAuthGuard } from '../../auth/jwt-auth.guard'
 
 const createRecipientBodySchema = z.object({
   name: z.string(),
