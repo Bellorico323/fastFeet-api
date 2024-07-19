@@ -5,7 +5,7 @@ import { PrismaService } from '../prisma.service'
 import { PrismaAdminMapper } from '../mappers/prisma-admins-mapper'
 
 @Injectable()
-export class PrismaAdminsRepository implements AdminRepository {
+export class PrismaAdminRepository implements AdminRepository {
   constructor(private prisma: PrismaService) {}
 
   async findByEmail(email: string): Promise<Admin | null> {

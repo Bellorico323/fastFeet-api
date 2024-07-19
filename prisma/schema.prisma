@@ -17,10 +17,50 @@ model Admin {
 }
 
 model Recipient {
-  id        String  @id() @default(uuid())
+  id        String     @id() @default(uuid())
   name      String
   latitude  Decimal
   longitude Decimal
+  delivery  Delivery[]
 
   @@map("recipients")
+}
+
+model Deliveryman {
+  id        String     @id() @default(uuid())
+  name      String
+  cpf       String     @unique
+  latitude  Decimal
+  longitude Decimal
+  password  String
+  delivery  Delivery[]
+
+  @@map("deliverymans")
+}
+
+model Delivery {
+  id             String   @id() @default(uuid())
+  status         String
+  dateOfWithdraw DateTime @map("date_of_withdraw")
+  deliveryDate   DateTime @map("delivery_date")
+  createdAt      DateTime @default(now()) @map("created_at")
+  deliverymanId  String   @map("deliveryman_id")
+  recipientId    String   @map("recipient_id")
+
+  deliveryman Deliveryman  @relation(fields: [deliverymanId], references: [id])
+  recipient   Recipient    @relation(fields: [recipientId], references: [id])
+  attachment  Attachment[]
+
+  @@map("deliveries")
+}
+
+model Attachment {
+  id         String @id @default(uuid())
+  title      String
+  url        String
+  deliveryId String @map("delivery_id")
+
+  delivery Delivery @relation(fields: [deliveryId], references: [id])
+
+  @@map("attachments")
 }
