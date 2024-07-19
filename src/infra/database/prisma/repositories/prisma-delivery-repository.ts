@@ -5,33 +5,77 @@ import {
 } from '@/domain/delivery/application/repositories/delivery-repository'
 import { Delivery } from '@/domain/delivery/enterprise/entities/delivery'
 import { Injectable } from '@nestjs/common'
+import { PrismaService } from '../prisma.service'
+import { PrismaDeliveryMapper } from '../mappers/prisma-delivery-mapper'
 
 Injectable()
 export class PrismaDeliveryRepository implements DeliveryRepository {
-  findById(id: string): Promise<Delivery | null> {
-    throw new Error('Method not implemented.')
+  constructor(private prisma: PrismaService) {}
+
+  async findById(id: string): Promise<Delivery | null> {
+    const delivery = await this.prisma.delivery.findUnique({
+      where: {
+        id,
+      },
+    })
+
+    if (!delivery) {
+      return null
+    }
+
+    return PrismaDeliveryMapper.toDomain(delivery)
   }
 
-  findManyByDeliverymanId(
+  async findManyByDeliverymanId(
     deliverymanId: string,
-    params: PaginationParams,
+    { page }: PaginationParams,
   ): Promise<Delivery[]> {
-    throw new Error('Method not implemented.')
+    const deliveries = await this.prisma.delivery.findMany({
+      where: {
+        deliverymanId,
+      },
+      take: 20,
+      skip: (page - 1) * 20,
+    })
+
+    return deliveries.map(PrismaDeliveryMapper.toDomain)
   }
 
-  findManyNearByDeliveryman(params: FindManyNearByParams): Promise<Delivery[]> {
-    throw new Error('Method not implemented.')
+  async findManyNearByDeliveryman(
+    params: FindManyNearByParams,
+  ): Promise<Delivery[]> {
+    const deliveries = await this.prisma.$queryRaw<Delivery[]>`
+    SELECT * FROM deliveries
+    WHERE ( 6371 * acos( cos( radians(${params.latitude}) ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians(${params.longitude}) ) + sin( radians(${params.latitude}) ) * sin( radians( latitude ) ) ) ) <= 10 
+  `
+
+    return deliveries
   }
 
-  create(delivery: Delivery): Promise<void> {
-    throw new Error('Method not implemented.')
+  async create(delivery: Delivery): Promise<void> {
+    const data = PrismaDeliveryMapper.toPrisma(delivery)
+
+    await this.prisma.delivery.create({
+      data,
+    })
   }
 
-  save(delivery: Delivery): Promise<void> {
-    throw new Error('Method not implemented.')
+  async save(delivery: Delivery): Promise<void> {
+    const { id, ...data } = PrismaDeliveryMapper.toPrisma(delivery)
+
+    await this.prisma.delivery.update({
+      data,
+      where: {
+        id,
+      },
+    })
   }
 
-  delete(delivery: Delivery): Promise<void> {
-    throw new Error('Method not implemented.')
+  async delete(delivery: Delivery): Promise<void> {
+    await this.prisma.delivery.delete({
+      where: {
+        id: delivery.id.toString(),
+      },
+    })
   }
 }

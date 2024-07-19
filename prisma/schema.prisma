@@ -39,13 +39,13 @@ model Deliveryman {
 }
 
 model Delivery {
-  id             String   @id() @default(uuid())
+  id             String    @id() @default(uuid())
   status         String
-  dateOfWithdraw DateTime @map("date_of_withdraw")
-  deliveryDate   DateTime @map("delivery_date")
-  createdAt      DateTime @default(now()) @map("created_at")
-  deliverymanId  String   @map("deliveryman_id")
-  recipientId    String   @map("recipient_id")
+  dateOfWithdraw DateTime? @map("date_of_withdraw")
+  deliveryDate   DateTime? @map("delivery_date")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  deliverymanId  String    @map("deliveryman_id")
+  recipientId    String    @map("recipient_id")
 
   deliveryman Deliveryman  @relation(fields: [deliverymanId], references: [id])
   recipient   Recipient    @relation(fields: [recipientId], references: [id])

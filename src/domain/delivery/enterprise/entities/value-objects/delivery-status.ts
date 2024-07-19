@@ -26,4 +26,17 @@ export class DeliveryStatus {
   static create() {
     return new DeliveryStatus('awaiting')
   }
+
+  static toStatus(status: string) {
+    if (
+      status === 'awaiting' ||
+      status === 'withdrawn' ||
+      status === 'delivered' ||
+      status === 'returned'
+    ) {
+      return new DeliveryStatus(status)
+    } else {
+      return DeliveryStatus.create()
+    }
+  }
 }
