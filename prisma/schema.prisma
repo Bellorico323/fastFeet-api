@@ -55,12 +55,12 @@ model Delivery {
 }
 
 model Attachment {
-  id         String @id @default(uuid())
+  id         String  @id @default(uuid())
   title      String
   url        String
-  deliveryId String @map("delivery_id")
+  deliveryId String? @map("delivery_id")
 
-  delivery Delivery @relation(fields: [deliveryId], references: [id])
+  delivery Delivery? @relation(fields: [deliveryId], references: [id])
 
   @@map("attachments")
 }
