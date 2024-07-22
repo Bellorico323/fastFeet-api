@@ -25,14 +25,14 @@ Content-Type: application/json
 ###
 
 # @name create_recipient
-POST {{baseUrl}}/recipient
+POST {{baseUrl}}/recipients
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-  "name": "recipient-1",
-  "latitude": 99999,
-  "longitude": 99999
+  "name": "recipient-2",
+  "latitude": 91119,
+  "longitude": 91199
 }
 
 ###

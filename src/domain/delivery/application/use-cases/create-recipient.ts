@@ -1,3 +1,4 @@
+import { Injectable } from '@nestjs/common'
 import { Recipient } from '../../enterprise/entities/recipient'
 import { RecipientRepository } from '../repositories/recipient-repository'
 import { Either, right } from '@/core/either'
@@ -10,6 +11,7 @@ interface CreateRecipientUseCaseRequest {
 
 type CreateRecipientUseCaseResponse = Either<null, { recipient: Recipient }>
 
+@Injectable()
 export class CreateRecipientUseCase {
   constructor(private recipientRepository: RecipientRepository) {}
 

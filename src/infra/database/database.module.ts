@@ -5,12 +5,16 @@ import { PrismaRecipientRepository } from './prisma/repositories/prisma-recipien
 import { PrismaDeliveryAttachmentsRepository } from './prisma/repositories/prisma-delivery-attachment-repository'
 import { PrismaDeliveryRepository } from './prisma/repositories/prisma-delivery-repository'
 import { PrismaDeliverymanRepository } from './prisma/repositories/prisma-deliveryman-repository'
+import { RecipientRepository } from '@/domain/delivery/application/repositories/recipient-repository'
 
 @Module({
   providers: [
     PrismaService,
+    {
+      provide: RecipientRepository,
+      useClass: PrismaRecipientRepository,
+    },
     PrismaAdminRepository,
-    PrismaRecipientRepository,
     PrismaDeliveryAttachmentsRepository,
     PrismaDeliveryRepository,
     PrismaDeliverymanRepository,
@@ -18,7 +22,7 @@ import { PrismaDeliverymanRepository } from './prisma/repositories/prisma-delive
   exports: [
     PrismaService,
     PrismaAdminRepository,
-    PrismaRecipientRepository,
+    RecipientRepository,
     PrismaDeliveryAttachmentsRepository,
     PrismaDeliveryRepository,
     PrismaDeliverymanRepository,

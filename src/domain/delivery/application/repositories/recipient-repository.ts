@@ -1,10 +1,10 @@
 import { PaginationParams } from '@/core/repositories/pagination-params'
 import { Recipient } from '../../enterprise/entities/recipient'
 
-export interface RecipientRepository {
-  findById(id: string): Promise<Recipient | null>
-  findMany(params: PaginationParams): Promise<Recipient[]>
-  create(recipient: Recipient): Promise<void>
-  save(recipient: Recipient): Promise<void>
-  delete(recipient: Recipient): Promise<void>
+export abstract class RecipientRepository {
+  abstract findById(id: string): Promise<Recipient | null>
+  abstract findMany(params: PaginationParams): Promise<Recipient[]>
+  abstract create(recipient: Recipient): Promise<void>
+  abstract save(recipient: Recipient): Promise<void>
+  abstract delete(recipient: Recipient): Promise<void>
 }
