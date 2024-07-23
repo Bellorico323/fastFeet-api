@@ -1,6 +1,6 @@
 import { Admin } from '../../enterprise/entities/admin'
 
-export interface AdminRepository {
-  findByEmail(email: string): Promise<Admin | null>
-  register(admin: Admin): Promise<void>
+export abstract class AdminRepository {
+  abstract findByEmail(email: string): Promise<Admin | null>
+  abstract register(admin: Admin): Promise<void>
 }

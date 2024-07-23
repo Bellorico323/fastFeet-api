@@ -4,14 +4,16 @@ import { CreateAccountController } from './controllers/create-account.controller
 import { CreateRecipientController } from './controllers/create-recipient.controller'
 import { DatabaseModule } from '../database/database.module'
 import { CreateRecipientUseCase } from '@/domain/delivery/application/use-cases/create-recipient'
+import { CryptographyModule } from '../cryptography/cryptography.module'
+import { AuthenticateAdminUseCase } from '@/domain/delivery/application/use-cases/authenticate-admin'
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, CryptographyModule],
   controllers: [
     CreateAccountController,
     AuthenticateController,
     CreateRecipientController,
   ],
-  providers: [CreateRecipientUseCase],
+  providers: [CreateRecipientUseCase, AuthenticateAdminUseCase],
 })
 export class HttpModule {}
