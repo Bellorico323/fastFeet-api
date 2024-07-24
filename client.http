@@ -36,3 +36,14 @@ Authorization: Bearer {{authToken}}
 }
 
 ###
+
+# @name edit_recipient
+PUT {{baseUrl}}/recipients/4e326b0e-b319-401f-add4-c23a49a71a54
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "name": "recipient-1",
+  "latitude": 10000.0,
+  "longitude": 10000.0
+}
