@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { BadRequestException, Body, Controller, Post } from '@nestjs/common'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
 import { z } from 'zod'
 import { CreateRecipientUseCase } from '@/domain/delivery/application/use-cases/create-recipient'
@@ -21,10 +21,14 @@ export class CreateRecipientController {
   async handle(@Body(bodyValidationPipe) body: CreateRecipientBodySchema) {
     const { name, latitude, longitude } = body
 
-    await this.createRecipient.execute({
+    const result = await this.createRecipient.execute({
       name,
       latitude,
       longitude,
     })
+
+    if (result.isLeft()) {
+      throw new BadRequestException()
+    }
   }
 }
