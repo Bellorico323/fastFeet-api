@@ -9,6 +9,8 @@ import { AuthenticateAdminUseCase } from '@/domain/delivery/application/use-case
 import { RegisterAdminUseCase } from '@/domain/delivery/application/use-cases/register-admin'
 import { EditRecipientsUseCase } from '@/domain/delivery/application/use-cases/edit-recipient'
 import { EditRecipientController } from './controllers/edit-recipient.controller'
+import { FetchRecipientsController } from './controllers/fetch-recipients.controller'
+import { FetchRecipientsUseCase } from '@/domain/delivery/application/use-cases/fetch-recipients'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -17,12 +19,14 @@ import { EditRecipientController } from './controllers/edit-recipient.controller
     AuthenticateController,
     CreateRecipientController,
     EditRecipientController,
+    FetchRecipientsController,
   ],
   providers: [
     CreateRecipientUseCase,
     AuthenticateAdminUseCase,
     RegisterAdminUseCase,
     EditRecipientsUseCase,
+    FetchRecipientsUseCase,
   ],
 })
 export class HttpModule {}
