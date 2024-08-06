@@ -11,6 +11,8 @@ import { EditRecipientsUseCase } from '@/domain/delivery/application/use-cases/e
 import { EditRecipientController } from './controllers/edit-recipient.controller'
 import { FetchRecipientsController } from './controllers/fetch-recipients.controller'
 import { FetchRecipientsUseCase } from '@/domain/delivery/application/use-cases/fetch-recipients'
+import { GetRecipientByIdUseCase } from '@/domain/delivery/application/use-cases/get-recipient-by-id'
+import { GetRecipientByIdController } from './controllers/get-recipient-by-id.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -20,12 +22,14 @@ import { FetchRecipientsUseCase } from '@/domain/delivery/application/use-cases/
     CreateRecipientController,
     EditRecipientController,
     FetchRecipientsController,
+    GetRecipientByIdController,
   ],
   providers: [
     CreateRecipientUseCase,
     AuthenticateAdminUseCase,
     RegisterAdminUseCase,
     EditRecipientsUseCase,
+    GetRecipientByIdUseCase,
     FetchRecipientsUseCase,
   ],
 })
