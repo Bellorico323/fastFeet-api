@@ -7,7 +7,7 @@ import { Test } from '@nestjs/testing'
 import { AdminFactory } from 'test/factories/make-admin'
 import request from 'supertest'
 
-describe('Create question (e2e)', () => {
+describe('Create recipient (e2e)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService

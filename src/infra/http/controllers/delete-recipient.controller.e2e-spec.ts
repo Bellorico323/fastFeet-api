@@ -8,7 +8,7 @@ import { AdminFactory } from 'test/factories/make-admin'
 import request from 'supertest'
 import { RecipientFactory } from 'test/factories/make-recipient'
 
-describe('Edit recipient (e2e)', () => {
+describe('Delete recipient (e2e)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
@@ -40,13 +40,9 @@ describe('Edit recipient (e2e)', () => {
     const recipientId = recipient.id.toString()
 
     const response = await request(app.getHttpServer())
-      .put(`/recipients/${recipientId}`)
+      .delete(`/recipients/${recipientId}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        name: 'recipient-test',
-        latitude: 12345,
-        longitude: 12345,
-      })
+      .send()
 
     expect(response.statusCode).toBe(204)
 
@@ -58,6 +54,6 @@ describe('Edit recipient (e2e)', () => {
       },
     })
 
-    expect(recipientOnDatabase).toBeTruthy()
+    expect(recipientOnDatabase).toBeFalsy()
   })
 })

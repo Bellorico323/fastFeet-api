@@ -33,8 +33,6 @@ export class EditRecipientController {
   ) {
     const { name, latitude, longitude } = body
 
-    console.log(body)
-
     const result = await this.editRecipient.execute({
       id: recipientId,
       name,
