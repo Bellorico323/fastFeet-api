@@ -5,11 +5,13 @@ import {
   Body,
   Controller,
   HttpCode,
+  NotFoundException,
   Param,
   Put,
 } from '@nestjs/common'
 import { z } from 'zod'
 import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 
 const editRecipientBodySchema = z.object({
   name: z.string(),
@@ -41,7 +43,14 @@ export class EditRecipientController {
     })
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      const error = result.value
+
+      switch (error.constructor) {
+        case ResourceNotFoundError:
+          throw new NotFoundException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
     }
   }
 }

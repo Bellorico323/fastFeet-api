@@ -1,3 +1,4 @@
+import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { DeleteRecipientUseCase } from '@/domain/delivery/application/use-cases/delete-recipient'
 
 import {
@@ -5,6 +6,7 @@ import {
   Controller,
   Delete,
   HttpCode,
+  NotFoundException,
   Param,
 } from '@nestjs/common'
 
@@ -20,7 +22,13 @@ export class DeleteRecipientController {
     })
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      const error = result.value
+      switch (error.constructor) {
+        case ResourceNotFoundError:
+          throw new NotFoundException(error.message)
+        default:
+          throw new BadRequestException(error.message)
+      }
     }
   }
 }

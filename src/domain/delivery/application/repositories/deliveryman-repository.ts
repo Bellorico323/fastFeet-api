@@ -1,8 +1,8 @@
 import { Deliveryman } from '../../enterprise/entities/deliveryman'
 
-export interface DeliverymanRepository {
-  findByCpf(cpf: string): Promise<Deliveryman | null>
-  register(Deliveryman: Deliveryman): Promise<void>
-  save(Deliveryman: Deliveryman): Promise<void>
-  remove(Deliveryman: Deliveryman): Promise<void>
+export abstract class DeliverymanRepository {
+  abstract findByCpf(cpf: string): Promise<Deliveryman | null>
+  abstract register(Deliveryman: Deliveryman): Promise<void>
+  abstract save(Deliveryman: Deliveryman): Promise<void>
+  abstract remove(Deliveryman: Deliveryman): Promise<void>
 }

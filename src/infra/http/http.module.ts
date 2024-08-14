@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { AuthenticateController } from './controllers/authenticate.controller'
+import { AuthenticateAdminController } from './controllers/authenticate-admin.controller'
 import { CreateAccountController } from './controllers/create-account.controller'
 import { CreateRecipientController } from './controllers/create-recipient.controller'
 import { DatabaseModule } from '../database/database.module'
@@ -15,17 +15,20 @@ import { GetRecipientByIdUseCase } from '@/domain/delivery/application/use-cases
 import { GetRecipientByIdController } from './controllers/get-recipient-by-id.controller'
 import { DeleteRecipientUseCase } from '@/domain/delivery/application/use-cases/delete-recipient'
 import { DeleteRecipientController } from './controllers/delete-recipient.controller'
+import { RegisterDeliverymanController } from './controllers/register-deliveryman.controller'
+import { RegisterDeliverymanUseCase } from '@/domain/delivery/application/use-cases/register-deliveryman'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
   controllers: [
     CreateAccountController,
-    AuthenticateController,
+    AuthenticateAdminController,
     CreateRecipientController,
     EditRecipientController,
     FetchRecipientsController,
     GetRecipientByIdController,
     DeleteRecipientController,
+    RegisterDeliverymanController,
   ],
   providers: [
     CreateRecipientUseCase,
@@ -35,6 +38,7 @@ import { DeleteRecipientController } from './controllers/delete-recipient.contro
     EditRecipientsUseCase,
     GetRecipientByIdUseCase,
     FetchRecipientsUseCase,
+    RegisterDeliverymanUseCase,
   ],
 })
 export class HttpModule {}
