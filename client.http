@@ -47,3 +47,15 @@ Authorization: Bearer {{authToken}}
   "latitude": 10000.0,
   "longitude": 10000.0
 }
+
+###
+
+# @name change_password
+POST {{baseUrl}}/password/change
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "cpf": "1213131",
+  "newPassword": "1321323"
+}

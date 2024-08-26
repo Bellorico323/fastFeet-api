@@ -19,6 +19,8 @@ import { RegisterDeliverymanController } from './controllers/register-deliveryma
 import { RegisterDeliverymanUseCase } from '@/domain/delivery/application/use-cases/register-deliveryman'
 import { AuthenticateDeliverymanController } from './controllers/authenticate-deliveryman.controller'
 import { AuthenticateDeliverymanUseCase } from '@/domain/delivery/application/use-cases/authenticate-deliveryman'
+import { ChangeDeliverymanPasswordController } from './controllers/change-deliveryman-password.controller'
+import { ChangePasswordFromDeliverymanDeliverymanUseCase } from '@/domain/delivery/application/use-cases/change-password-from-deliveryman'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -32,12 +34,14 @@ import { AuthenticateDeliverymanUseCase } from '@/domain/delivery/application/us
     DeleteRecipientController,
     RegisterDeliverymanController,
     AuthenticateDeliverymanController,
+    ChangeDeliverymanPasswordController,
   ],
   providers: [
     CreateRecipientUseCase,
     DeleteRecipientUseCase,
     AuthenticateAdminUseCase,
     AuthenticateDeliverymanUseCase,
+    ChangePasswordFromDeliverymanDeliverymanUseCase,
     RegisterAdminUseCase,
     EditRecipientsUseCase,
     GetRecipientByIdUseCase,
