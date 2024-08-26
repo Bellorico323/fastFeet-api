@@ -30,7 +30,7 @@ describe('Create recipient (e2e)', () => {
   test('[POST] /recipients', async () => {
     const admin = await adminFactory.makePrismaAdmin()
 
-    const accessToken = jwt.sign({ sub: admin.id.toString() })
+    const accessToken = jwt.sign({ sub: admin.id.toString(), role: 'ADMIN' })
 
     const response = await request(app.getHttpServer())
       .post('/recipients')

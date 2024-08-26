@@ -33,7 +33,7 @@ describe('Delete recipient (e2e)', () => {
   test('[PUT] /recipients/:id', async () => {
     const admin = await adminFactory.makePrismaAdmin()
 
-    const accessToken = jwt.sign({ sub: admin.id.toString() })
+    const accessToken = jwt.sign({ sub: admin.id.toString(), role: 'ADMIN' })
 
     const recipient = await recipientFactory.makePrismaRecipient()
 

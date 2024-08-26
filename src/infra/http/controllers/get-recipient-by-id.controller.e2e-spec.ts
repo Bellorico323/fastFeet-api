@@ -31,7 +31,10 @@ describe('Get recipient by id (E2E)', () => {
   test('[GET] /recipient/:id', async () => {
     const admin = await adminFactory.makePrismaAdmin()
 
-    const accessToken = jwt.sign({ sub: admin.id.toString() })
+    const accessToken = jwt.sign({
+      sub: admin.id.toString(),
+      role: 'DELIVERYMAN',
+    })
 
     const recipient = await recipientFactory.makePrismaRecipient({
       name: 'recipient-1',

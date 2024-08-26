@@ -31,7 +31,7 @@ describe('Fetch recipients (E2E)', () => {
   test('[GET] /recipients', async () => {
     const admin = await adminFactory.makePrismaAdmin()
 
-    const accessToken = jwt.sign({ sub: admin.id.toString() })
+    const accessToken = jwt.sign({ sub: admin.id.toString(), role: 'ADMIN' })
 
     await Promise.all([
       recipientFactory.makePrismaRecipient({
