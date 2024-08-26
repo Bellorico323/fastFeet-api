@@ -17,6 +17,8 @@ import { DeleteRecipientUseCase } from '@/domain/delivery/application/use-cases/
 import { DeleteRecipientController } from './controllers/delete-recipient.controller'
 import { RegisterDeliverymanController } from './controllers/register-deliveryman.controller'
 import { RegisterDeliverymanUseCase } from '@/domain/delivery/application/use-cases/register-deliveryman'
+import { AuthenticateDeliverymanController } from './controllers/authenticate-deliveryman.controller'
+import { AuthenticateDeliverymanUseCase } from '@/domain/delivery/application/use-cases/authenticate-deliveryman'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule],
@@ -29,11 +31,13 @@ import { RegisterDeliverymanUseCase } from '@/domain/delivery/application/use-ca
     GetRecipientByIdController,
     DeleteRecipientController,
     RegisterDeliverymanController,
+    AuthenticateDeliverymanController,
   ],
   providers: [
     CreateRecipientUseCase,
     DeleteRecipientUseCase,
     AuthenticateAdminUseCase,
+    AuthenticateDeliverymanUseCase,
     RegisterAdminUseCase,
     EditRecipientsUseCase,
     GetRecipientByIdUseCase,
