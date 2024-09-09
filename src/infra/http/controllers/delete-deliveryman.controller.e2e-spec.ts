@@ -6,58 +6,54 @@ import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import { AdminFactory } from 'test/factories/make-admin'
 import request from 'supertest'
-import { RecipientFactory } from 'test/factories/make-recipient'
+import { DeliverymanFactory } from 'test/factories/make-deliveryman'
 
-describe('Delete recipient (e2e)', () => {
+describe('Delete deliveryman (e2e)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
   let adminFactory: AdminFactory
-  let recipientFactory: RecipientFactory
+  let deliverymanFactory: DeliverymanFactory
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [AdminFactory, RecipientFactory],
+      providers: [AdminFactory, DeliverymanFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
     prisma = moduleRef.get(PrismaService)
     adminFactory = moduleRef.get(AdminFactory)
-    recipientFactory = moduleRef.get(RecipientFactory)
+    deliverymanFactory = moduleRef.get(DeliverymanFactory)
     jwt = moduleRef.get(JwtService)
 
     await app.init()
   })
 
-  test('[DELETE] /recipients/:id', async () => {
+  test('[DELETE] /deliverymans/:cpf', async () => {
     const admin = await adminFactory.makePrismaAdmin()
 
     const accessToken = jwt.sign({ sub: admin.id.toString(), role: 'ADMIN' })
 
-    const recipient = await recipientFactory.makePrismaRecipient({
-      name: 'recipient-test',
-      latitude: 12345,
-      longitude: 12345,
+    const deliveryman = await deliverymanFactory.makePrismaDeliveryman({
+      cpf: '111111111',
     })
 
-    const recipientId = recipient.id.toString()
+    const deliverymanCpf = deliveryman.cpf
 
     const response = await request(app.getHttpServer())
-      .delete(`/recipients/${recipientId}`)
+      .delete(`/deliverymans/${deliverymanCpf}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send()
 
     expect(response.statusCode).toBe(204)
 
-    const recipientOnDatabase = await prisma.recipient.findFirst({
+    const deliverymanOnDatabase = await prisma.deliveryman.findFirst({
       where: {
-        name: 'recipient-test',
-        latitude: 12345,
-        longitude: 12345,
+        cpf: '111111111',
       },
     })
 
-    expect(recipientOnDatabase).toBeFalsy()
+    expect(deliverymanOnDatabase).toBeFalsy()
   })
 })

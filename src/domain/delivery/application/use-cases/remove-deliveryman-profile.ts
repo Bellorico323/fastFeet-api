@@ -1,6 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/errors/resource-not-found-error'
 import { DeliverymanRepository } from '../repositories/deliveryman-repository'
+import { Injectable } from '@nestjs/common'
 
 interface RemoveDeliverymanProfileUseCaseRequest {
   cpf: string
@@ -11,6 +12,7 @@ type RemoveDeliverymanProfileUseCaseResponse = Either<
   null
 >
 
+@Injectable()
 export class RemoveDeliverymanProfileUseCase {
   constructor(private deliverymanRepository: DeliverymanRepository) {}
 
